@@ -10,8 +10,6 @@ GREEN = ["#09D509", "#00AD00"]
 GRAY = ["gray", "#646464"]
 RED = ["#FF4343", "#B02D2D"]
 
-isPlaying = True
-
 MUSIC_FILE = {
     "熱血": ["./music/example.mp3", "./music/example3.mp3"], 
     "Emo": ["./music/example2.mp3", "./music/example.mp3", "./music/example3.mp3"], 
@@ -56,6 +54,23 @@ class App(customtkinter.CTk):
         self.isStarted = False
         self.isPlaying = False
 
+        # Image Pulse
+        self.pulse_i = 0
+        self.PULSE_LAP = [3, 3.8, 7, 3, 2, 1.5, 0.6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1.2, 1.4, 1.8 , 2, 2.5]
+        self.PULSE_THRESHOLD = len(self.PULSE_LAP)
+        self.BPM = 115
+        self.BPM = self.BPM*2 if self.BPM < 100 else self.BPM
+        self.pulse_interval = int(((1 / (self.BPM / 60)) * 1000) / self.PULSE_THRESHOLD * 0.85)
+        print(f"PULSE update by {self.pulse_interval}")
+
+        self.IMAGE = {
+            "熱血": [None for i in range(self.PULSE_THRESHOLD)], 
+            "Emo": [None for i in range(self.PULSE_THRESHOLD)], 
+            "電子": [None for i in range(self.PULSE_THRESHOLD)],
+            "放鬆": [None for i in range(self.PULSE_THRESHOLD)]
+        }
+        self.init_pulse_img()
+
         self.image = customtkinter.CTkImage(light_image=Image.open(BACKGROUND["放鬆"]),
                                             dark_image=Image.open(BACKGROUND["放鬆"]),
                                             size=(300, 300))
@@ -79,7 +94,7 @@ class App(customtkinter.CTk):
         self.music_end = pygame.USEREVENT + 1
         pygame.mixer.music.set_endevent(self.music_end)
         self.mainloop_handler()
-
+        self.pulse_handler()
         
     def play_button_callback(self):
         if self.isStarted == False:
@@ -89,6 +104,7 @@ class App(customtkinter.CTk):
             self.play_button.configure(text="Pause", fg_color=RED[0], hover_color=RED[1])
             pygame.mixer.music.load(self.music_file)
             pygame.mixer.music.play()
+
         else:
             if self.isPlaying == False:
                 print(f"Resume playing {self.genre_dropdown.get()}")
@@ -124,6 +140,31 @@ class App(customtkinter.CTk):
         self.isPlaying = False
         self.isStarted = False
         pygame.mixer.music.stop()
+
+    def init_pulse_img(self):
+        for genre in self.IMAGE:
+            for i in range(self.PULSE_THRESHOLD):
+                self.IMAGE[genre][i] = customtkinter.CTkImage(light_image=Image.open(BACKGROUND[genre]),
+                                            dark_image=Image.open(BACKGROUND[genre]),
+                                            size=(300+self.PULSE_LAP[i], 300+self.PULSE_LAP[i]))
+
+    def pulse_handler(self):
+        choice = self.genre_dropdown.get()
+        if self.isStarted and choice != None:
+            if self.isPlaying == True:
+                
+                # self.image = customtkinter.CTkImage(light_image=Image.open(BACKGROUND[choice]), 
+                #                                 dark_image=Image.open(BACKGROUND[choice]),
+                #                                 size=(300+self.PULSE_LAP[self.pulse_i], 300+self.PULSE_LAP[self.pulse_i]))
+                self.pulse_i = (self.pulse_i + 1)%self.PULSE_THRESHOLD
+                self.photo_frame.image_label.configure(image=self.IMAGE[choice][self.pulse_i])
+            else:
+                self.pulse_i = 0
+                # self.image = customtkinter.CTkImage(light_image=Image.open(BACKGROUND[choice]), 
+                #                                 dark_image=Image.open(BACKGROUND[choice]),
+                #                                 size=(300, 300))
+                self.photo_frame.image_label.configure(image=self.IMAGE[choice][self.pulse_i])
+        self.after(self.pulse_interval, self.pulse_handler)
 
     def mainloop_handler(self):
         for event in pygame.event.get():
