@@ -1,12 +1,14 @@
 class Box {
-  constructor(x, y, w, h) {
+  constructor(x, y, w, h, img) {
     const options = {
       restitution: 0.5
     };
     this.body = Matter.Bodies.rectangle(x, y, w, h, options);
     Matter.World.add(world, this.body);
+    this.type = "box";
     this.w = w;
     this.h = h;
+    this.img = img;
   }
 
   show() {
@@ -18,7 +20,7 @@ class Box {
     fill(255);
     rectMode(CENTER);
     imageMode(CENTER);
-    image(wood1_Img, 0, 0, this.w, this.h);
+    image(this.img, 0, 0, this.w, this.h);
     pop();
   }
 }
