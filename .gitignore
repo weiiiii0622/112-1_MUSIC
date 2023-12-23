@@ -1,3 +1,5 @@
 /MUSIC
 *.mov
 .DS_STORE
+./Final/MAX8/node_modules/
+Final/MAX8/node_modules/

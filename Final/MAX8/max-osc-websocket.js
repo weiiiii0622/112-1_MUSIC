@@ -48,6 +48,10 @@ wss.on("connection", function connection(ws) {
 			console.log('Wood!');
 			maxAPI.outlet('wood', [isActive, x_coord, y_coord, x_speed, y_speed]);
 		}
+		if(msgParsed['address'] == '/pig'){
+			console.log('pig!');
+			maxAPI.outlet('pig', [isActive, x_coord, y_coord, x_speed, y_speed]);
+		}
 	});
 
 	ws.on("error", (err) => {

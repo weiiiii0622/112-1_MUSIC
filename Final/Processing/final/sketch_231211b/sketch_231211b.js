@@ -4,10 +4,10 @@ const { Engine, World, Bodies, Mouse, MouseConstraint, Constraint, Collision, De
 const DEBUG        = 1;
 const FONT_SIZE    = 40;
 const GAME_TIME    = 60; // seconds
-const TOTAL_STAGE  = 1;
+const TOTAL_STAGE  = 2;
 
-const BOX_SIZEX    = [85, 20, 203,  18, 80, 38];
-const BOX_SIZEY    = [20, 85,  18, 203, 38, 80];
+const BOX_SIZEX    = [85, 20, 203,  18, 80, 38, 70];
+const BOX_SIZEY    = [20, 85,  18, 203, 38, 80, 70];
 
 const SLING_XPOS   = 0.15;
 const SLING_YPOS   = 0.75;
@@ -15,7 +15,7 @@ const SLING_YPOS   = 0.75;
 const SPACE_WIDTH  = 20;
 const SPACE_HEIGHT = 8;
 
-const IP = "127.0.0.1";
+const IP = "192.168.68.50";
 const PORT = "8081";
 
 // ********************************** Variables **********************************
@@ -86,6 +86,7 @@ function preload() {
   boxImg[3] = loadImage('./images/wood-2-2.png');  // long  td
   boxImg[4] = loadImage('./images/wood-3.png');    // fat   lr
   boxImg[5] = loadImage('./images/wood-3-2.png');  // fat   td
+  boxImg[6] = loadImage('./images/wood-4.png');  // fat   td
   startMenuImg = loadImage('./images/startmenu.jpg');
   winImg = loadImage('./images/win.jpg');
   bkgImg = loadImage('./images/background-2.png');
@@ -111,17 +112,17 @@ function setStage(stage){
   }
   else if(stage == 2){
     bird_left    = 3;
-    pig_left     = 2;
+    pig_left     = 3;
     
-    PIG_NUM      = 2;
-    PIG_XPOS     = [185, 285];
-    PIG_YPOS     = [170, 170];
-    PIG_TYPE     = [0, 1];
+    PIG_NUM      = 3;
+    PIG_XPOS     = [185, 185, 475];
+    PIG_YPOS     = [ 85, 180, 100];
+    PIG_TYPE     = [  0,   1,   2];
     
-    BOX_NUM      = 10;
-    BOX_XPOS     = [260, 240, 130, 110, 185, 360, 340, 230, 210, 285];
-    BOX_YPOS     = [0, 0, 0, 0, 85, 0, 0, 0, 0, 85];
-    BOX_TYPE     = [1, 1, 1, 1,  2, 1, 1, 1, 1,  2];    
+    BOX_NUM      = 16;
+    BOX_XPOS     = [260, 240, 130, 110, 185, 260, 240, 130, 110, 185, 400, 550, 400, 550, 475, 475];
+    BOX_YPOS     = [  0,   0,   0,   0,  85, 105, 105, 105, 105, 170,   0,   0, 100, 100,  80, 160];
+    BOX_TYPE     = [  1,   1,   1,   1,   2,   1,   1,   1,   1,   2,   5,   5,   6,   6,   2,   2];    
   }
   else if(stage == 3){
     
@@ -217,7 +218,6 @@ function reset(){
   for(let i = 0; i < PIG_NUM; i++){
     World.remove(world, pigs[i].body);
   }
-  console.log(boxes);
   for(let i = 0; i < BOX_NUM; i++){
     World.remove(world, boxes[i].body);
   }
@@ -281,7 +281,6 @@ function keyPressed() {
         
         // Regenerate pairs for collision detection since the bird is a new object
         worldObj[0] = bird;
-        console.log(worldObj);
         worldObjPairs = generatePairs(worldObj);
         slingshot.attach(bird.body);
        
@@ -327,8 +326,8 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  console.log(mouseX, mouseY);
-  console.log("Bird", bird.body.position);
+  //console.log(mouseX, mouseY);
+  //console.log("Bird", bird.body.position);
   // Check if the mouse is inside the div boundaries
   if (
     mouseX >= bird.body.position.x - bird.r &&
@@ -373,6 +372,16 @@ function draw() {
     for (let pig of pigs) {
       if(!pig.isDead){
         pig.show();
+        // Pig Out of Bound ->
+        newPos = mapPosition(pig.body.position)
+        if(newPos.x < (-SPACE_WIDTH)/2 || newPos.x >(SPACE_WIDTH)/2 || newPos.y < 0 || newPos.y > SPACE_HEIGHT){
+          pig.isDead = true;
+          pig_left -= 1;
+          worldObj = worldObj.filter(obj => obj != pig);
+          worldObjPairs = generatePairs(worldObj);
+          console.log(`${pig_left} pigs left.`);
+          oscPort.send(createPacket("/pig", 0, newPos.x, newPos.y, 0, 0));
+        }
       }
     }
     bird.show();
@@ -381,10 +390,11 @@ function draw() {
     
     // Get Bird Location
     if(isBirdFlying == true){
-
+      
       newPos = mapPosition(bird.body.position)
-      //console.log(bird.body.position, newPos);
-      oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, 0, 0));
+      // Bird x-speed: 4 * bird.body.velocity.x * bird.body.deltaTime)
+      let birdXSpeed_px = 4 * bird.body.velocity.x * bird.body.deltaTime;
+      oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, SPACE_WIDTH * birdXSpeed_px/width, 0));
       
       // Out Of Bound
       if(newPos.x < (-SPACE_WIDTH)/2 || newPos.x >(SPACE_WIDTH)/2 || newPos.y < 0 || newPos.y > SPACE_HEIGHT){
@@ -400,6 +410,7 @@ function draw() {
         // Finish!
         if(!isGameOverPending){
           gameTimer.pause();
+          isBirdFlying = false;
           isGameOverPending = true;
           console.log("Game Win.");
           gameOverBG.style.height = '100vh';
@@ -414,6 +425,7 @@ function draw() {
         // Next Stage
         if(!isGameOverPending){
           gameTimer.pause();
+          isBirdFlying = false;
           isGameOverPending = true;
           curStage += 1;
           console.log("Going to stage", curStage);
@@ -432,6 +444,7 @@ function draw() {
     
     if((remainingTime <= 0 || bird_left <= 0) && pig_left > 0 && !isGameOverPending){
       // Game Over
+      isBirdFlying = false;
       isGameOverPending = true;
       setTimeout(() => {
         console.log("Game Over.");
@@ -544,7 +557,7 @@ function generatePairs(list) {
       pairs.push([list[i], list[j]]);
     }
   }
-  console.log(pairs);
+  //console.log(pairs);
   return pairs;
 }
 
