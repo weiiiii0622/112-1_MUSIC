@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 5,
-			"revision" : 7,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 858.0, 324.0, 986.0, 793.0 ],
+		"rect" : [ 203.0, 105.0, 586.0, 793.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -80,8 +80,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 670.911847174167633, 754.161023676395416, 138.0, 22.0 ],
-					"text" : "udpsend 127.0.0.1 8082"
+					"patching_rect" : [ 670.911847174167633, 754.161023676395416, 165.0, 22.0 ],
+					"text" : "udpsend 192.168.68.57 8082"
 				}
 
 			}
@@ -757,7 +757,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 72.0, 48.225491046905518, 160.0, 52.0 ],
+					"patching_rect" : [ 72.0, 48.225491046905518, 160.0, 51.0 ],
 					"text" : "You only need to run this once, to install the node package."
 				}
 
@@ -806,6 +806,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -1186,7 +1188,7 @@
 			}
 , 			{
 				"name" : "max-osc-websocket.js",
-				"bootpath" : "~/OneDrive/桌面/coding/ntu/112-1_MUSIC/Final/MAX8",
+				"bootpath" : "~/Desktop/coding/ntu/112-1_MUSIC/Final/MAX8",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
