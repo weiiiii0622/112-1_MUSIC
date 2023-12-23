@@ -10,12 +10,13 @@ const BOX_SIZEX    = [85, 20, 203,  18, 80, 38, 70];
 const BOX_SIZEY    = [20, 85,  18, 203, 38, 80, 70];
 
 const SLING_XPOS   = 0.15;
-const SLING_YPOS   = 0.75;
+const SLING_YPOS   = 0.65;
 
 const SPACE_WIDTH  = 20;
 const SPACE_HEIGHT = 8;
 
-const IP = "192.168.68.50";
+//const IP = "192.168.68.50";
+const IP = "127.0.0.1";
 const PORT = "8081";
 
 // ********************************** Variables **********************************
@@ -164,7 +165,7 @@ function setup() {
   ground = new Ground(width / 2, height - 10, width*2, 20, groundImg);
   
   // Bird
-  bird = new RedBird(300, 300, 30, RedBirdImg);
+  bird = new RedBird(width * SLING_XPOS, height * SLING_YPOS, 30, RedBirdImg);
   worldObj.push(bird);
   
   // Pig
@@ -335,7 +336,14 @@ function mousePressed() {
     mouseY >= bird.body.position.y - bird.r &&
     mouseY <= bird.body.position.y + bird.r
   ) {
-    isMouseOnBird = true;
+    if(slingshot.isAttach() && isMouseOnBird == false){  
+      // Send OSC slingshot
+      let pos = {"x": width * SLING_XPOS, "y":height * SLING_YPOS};
+      let newPos = mapPosition(pos);
+      oscPort.send(createPacket("/slingshot", 0, newPos.x, newPos.y, 0, 0));
+      isMouseOnBird = true;
+    }
+    
     //console.log("Mouse is pressed on the bird!");
   }
 }
@@ -343,8 +351,11 @@ function mousePressed() {
 function mouseReleased() {
   if(slingshot.isAttach() && isMouseOnBird == true){  
     setTimeout(() => {
+      let pos = {"x": width * SLING_XPOS, "y":height * SLING_YPOS};
+      let newPos = mapPosition(pos);
       bird_left -= 1;
       slingshot.fly();
+      oscPort.send(createPacket("/slingshot", 1, newPos.x, newPos.y, 0, 0));
       isMouseOnBird = false;
       isBirdFlying = true;
     }, 50);
@@ -357,6 +368,9 @@ function draw() {
   
   if(curScene == 0){
     background(startMenuImg);
+    str = 'Press Enter to Start!';
+    fill(255, 255, 255);
+    text(str, width/2, height*3/4);
   }
   else if(curScene == 1){
     // Game
@@ -394,10 +408,11 @@ function draw() {
       newPos = mapPosition(bird.body.position)
       // Bird x-speed: 4 * bird.body.velocity.x * bird.body.deltaTime)
       let birdXSpeed_px = 4 * bird.body.velocity.x * bird.body.deltaTime;
-      oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, SPACE_WIDTH * birdXSpeed_px/width, 0));
+      let birdYSpeed_px = 4 * bird.body.velocity.y * bird.body.deltaTime;
+      oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, SPACE_WIDTH * birdXSpeed_px/width, SPACE_HEIGHT * birdYSpeed_px/width));
       
       // Out Of Bound
-      if(newPos.x < (-SPACE_WIDTH)/2 || newPos.x >(SPACE_WIDTH)/2 || newPos.y < 0 || newPos.y > SPACE_HEIGHT){
+      if(newPos.x < (-SPACE_WIDTH)/2 || newPos.x >(SPACE_WIDTH)/2 || newPos.y < 0){
         isBirdFlying = false;
         oscPort.send(createPacket("/bird", 1, newPos.x, newPos.y, 0, 0));
       }
@@ -515,7 +530,8 @@ function createPacket(address, isActive, x_coord, y_coord, x_speed, y_speed) {
 function initSocket(){
   oscPort.send(createPacket("/wood", 1, 0, 0, 0, 0));
   oscPort.send(createPacket("/bird", 1, 0, 0, 0, 0));
-  oscPort.send(createPacket("/pig",  1, 0, 0, 0, 0)); 
+  oscPort.send(createPacket("/pig",  1, 0, 0, 0, 0));
+  oscPort.send(createPacket("/slingshot",  1, 0, 0, 0, 0));
 }
 
 function connectSocket(){

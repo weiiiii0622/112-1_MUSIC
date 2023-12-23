@@ -52,6 +52,10 @@ wss.on("connection", function connection(ws) {
 			console.log('pig!');
 			maxAPI.outlet('pig', [isActive, x_coord, y_coord, x_speed, y_speed]);
 		}
+		if(msgParsed['address'] == '/slingshot'){
+			console.log('slingshot!');
+			maxAPI.outlet('slingshot', [isActive, x_coord, y_coord, x_speed, y_speed]);
+		}
 	});
 
 	ws.on("error", (err) => {
