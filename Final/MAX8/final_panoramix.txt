@@ -1,10 +1,10 @@
 # ==============================================================================
-# File: "C:\Users\Emma Wu\Downloads\save5.txt"
+# File: "C:\Users\Emma Wu\Downloads\save6.txt"
 # Exported by: Emma Wu
 # Emma Wu@LAPTOP-RB199NCG - Windows 10
-# 24-dec-2023 01:00:25
+# 24-dec-2023 16:42:12
 # Origin: Panoramix [1.6.5] - x86_64
-# Content: 3188 OSC messages
+# Content: 3342 OSC messages
 # ==============================================================================
 /options/name "Options"
 /options/color 1.0 0.0 0.0 1.0
@@ -940,7 +940,7 @@
 /lfe/delay/bypass 0
 /lfe/cutoff 50.0
 /lfe/cutoff/bypass 0
-/track/indices 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+/track/indices 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 /stereo/indices
 /multi/indices
 /tree/indices
@@ -3109,6 +3109,160 @@
 /track/14/bus/H/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
 /track/14/bus/H/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
 /track/14/lock 0
+/track/15/name "pig alive"
+/track/15/color 0.117647 0.564706 1.0 1.0
+/track/15/numinputs 1
+/track/15/visible 1
+/track/15/trim 0.0
+/track/15/dynamics/attack 10.0
+/track/15/dynamics/release 30.0
+/track/15/dynamics/lookahead 0.0
+/track/15/dynamics/compressor/threshold -30.0
+/track/15/dynamics/compressor/ratio 1.0
+/track/15/dynamics/expander/threshold -60.0
+/track/15/dynamics/expander/ratio 1.0
+/track/15/dynamics/makeup 0.0
+/track/15/dynamics/link "multi mono"
+/track/15/dynamics/bypass 1
+/track/15/dynamics/grid/visible 1
+/track/15/dynamics/curve/fill 1
+/track/15/dynamics/background/color 1.0 1.0 1.0 0.0
+/track/15/dynamics/foreground/color 0.117647 0.564706 1.0 0.6
+/track/15/dynamics/curve/color 0.0941176 0.45098 0.8 1.0
+/track/15/dynamics/curve/thickness 1.0
+/track/15/dynamics/grid/color 0.501961 0.501961 0.501961 1.0
+/track/15/dynamics/title "pig alive"
+/track/15/equalizer/bypass 1
+/track/15/equalizer/gain 0.0
+/track/15/equalizer/filter/1/active 0
+/track/15/equalizer/filter/1/freq 50.0
+/track/15/equalizer/filter/1/order 2
+/track/15/equalizer/filter/2/active 1
+/track/15/equalizer/filter/2/freq 100.0
+/track/15/equalizer/filter/2/gain 0.0
+/track/15/equalizer/filter/2/q 1.0
+/track/15/equalizer/filter/3/active 1
+/track/15/equalizer/filter/3/freq 500.0
+/track/15/equalizer/filter/3/gain 0.0
+/track/15/equalizer/filter/3/q 1.0
+/track/15/equalizer/filter/4/active 1
+/track/15/equalizer/filter/4/freq 1000.0
+/track/15/equalizer/filter/4/gain 0.0
+/track/15/equalizer/filter/4/q 1.0
+/track/15/equalizer/filter/5/active 1
+/track/15/equalizer/filter/5/freq 2000.0
+/track/15/equalizer/filter/5/gain 0.0
+/track/15/equalizer/filter/5/q 1.0
+/track/15/equalizer/filter/6/active 1
+/track/15/equalizer/filter/6/freq 5000.0
+/track/15/equalizer/filter/6/gain 0.0
+/track/15/equalizer/filter/6/q 1.0
+/track/15/equalizer/filter/7/active 1
+/track/15/equalizer/filter/7/freq 10000.0
+/track/15/equalizer/filter/7/gain 0.0
+/track/15/equalizer/filter/7/q 1.0
+/track/15/equalizer/filter/8/active 0
+/track/15/equalizer/filter/8/freq 16000.0
+/track/15/equalizer/filter/8/order 2
+/track/15/gain 0.0
+/track/15/gain/ramptime 20.0
+/track/15/mute 0
+/track/15/annotation ""
+/track/15/levels/input/visible 1
+/track/15/levels/input/post 0
+/track/15/levels/input/mode "peak"
+/track/15/levels/output/visible 1
+/track/15/levels/output/post 1
+/track/15/levels/output/mode "peak"
+/track/15/solo 0
+/track/15/bus/A/destination "/"
+/track/15/bus/B/destination "/bus/1"
+/track/15/bus/C/destination "/"
+/track/15/bus/D/destination "/"
+/track/15/bus/E/destination "/"
+/track/15/bus/F/destination "/"
+/track/15/bus/G/destination "/"
+/track/15/bus/H/destination "/"
+/track/15/bus/A/mute 0
+/track/15/bus/B/mute 0
+/track/15/bus/C/mute 0
+/track/15/bus/D/mute 0
+/track/15/bus/E/mute 0
+/track/15/bus/F/mute 0
+/track/15/bus/G/mute 0
+/track/15/bus/H/mute 0
+/track/15/bus/A/gain 0.0
+/track/15/bus/B/gain 0.0
+/track/15/bus/C/gain 0.0
+/track/15/bus/D/gain 0.0
+/track/15/bus/E/gain 0.0
+/track/15/bus/F/gain 0.0
+/track/15/bus/G/gain 0.0
+/track/15/bus/H/gain 0.0
+/track/15/bus/A/delay 0.0
+/track/15/bus/B/delay 0.0
+/track/15/bus/C/delay 0.0
+/track/15/bus/D/delay 0.0
+/track/15/bus/E/delay 0.0
+/track/15/bus/F/delay 0.0
+/track/15/bus/G/delay 0.0
+/track/15/bus/H/delay 0.0
+/track/15/bus/display "B"
+/track/15/bus/send/display "A-D"
+/track/15/routing/input/1/adc 15
+/track/15/lfe/send 0.0
+/track/15/lfe/mute 0
+/track/15/doppler 0
+/track/15/air 0
+/track/15/phaseinvert 0
+/track/15/azim 0.0
+/track/15/elev 0.0
+/track/15/dist 1.0
+/track/15/delay/linkedtodistance 0
+/track/15/direct/linkedtodistance 1
+/track/15/early/linkedtodistance 1
+/track/15/reverb/linkedtodistance 1
+/track/15/delay 0.0
+/track/15/direct/gain/offset 0.0
+/track/15/direct/gain -0.5
+/track/15/direct/gain/low 0.0
+/track/15/direct/gain/med 0.0
+/track/15/direct/gain/high 0.0
+/track/15/direct/freq/low 250.0
+/track/15/direct/freq/high 4000.0
+/track/15/direct/filter/bypass 1
+/track/15/early/gain/offset 0.0
+/track/15/early/gain -8.5
+/track/15/early/gain/low 0.0
+/track/15/early/gain/med 0.0
+/track/15/early/gain/high 0.0
+/track/15/early/freq/low 250.0
+/track/15/early/freq/high 4000.0
+/track/15/early/filter/bypass 1
+/track/15/reverb/send -18.0
+/track/15/reverb/send/offset 0.0
+/track/15/reverb/send/ramptime 20.0
+/track/15/early/width 30.0
+/track/15/direct/mute 0
+/track/15/early/mute 0
+/track/15/reverb/mute 0
+/track/15/bus/A/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/A/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/B/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/B/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/C/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/C/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/D/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/D/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/E/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/E/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/F/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/F/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/G/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/G/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/bus/H/early/delays 22.22 25.2969 26.6361 28.9126 32.274 34.4063 36.777 39.71
+/track/15/bus/H/early/gains -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0
+/track/15/lock 0
 /group/indices 1 2 3
 /group/1/name "all tracks"
 /group/1/affects/mute 1
@@ -3116,7 +3270,7 @@
 /group/1/affects/send 1
 /group/1/affects/bussend 1
 /group/1/affects/position 1
-/group/1/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+/group/1/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 /group/1/active 0
 /group/2/name "all mono"
 /group/2/affects/mute 1
@@ -3124,7 +3278,7 @@
 /group/2/affects/send 1
 /group/2/affects/bussend 1
 /group/2/affects/position 1
-/group/2/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+/group/2/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 /group/2/active 0
 /group/3/name ">> HOA Bus 1"
 /group/3/affects/mute 1
@@ -3132,7 +3286,7 @@
 /group/3/affects/send 1
 /group/3/affects/bussend 1
 /group/3/affects/position 1
-/group/3/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+/group/3/track 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 /group/3/active 0
 /viewer/layout "leftright"
 /viewer/background/color 0.709804 0.709804 0.709804 1.0

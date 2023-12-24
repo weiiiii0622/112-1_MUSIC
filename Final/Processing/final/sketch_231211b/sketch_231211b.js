@@ -528,9 +528,9 @@ function createPacket(address, isActive, x_coord, y_coord, x_speed, y_speed) {
 }
 
 function initSocket(){
-  oscPort.send(createPacket("/wood", 1, 0, 0, 0, 0));
+ // oscPort.send(createPacket("/wood", 1, 0, 0, 0, 0));
   oscPort.send(createPacket("/bird", 1, 0, 0, 0, 0));
-  oscPort.send(createPacket("/pig",  1, 0, 0, 0, 0));
+ // oscPort.send(createPacket("/pig",  1, 0, 0, 0, 0));
   oscPort.send(createPacket("/slingshot",  1, 0, 0, 0, 0));
 }
 
