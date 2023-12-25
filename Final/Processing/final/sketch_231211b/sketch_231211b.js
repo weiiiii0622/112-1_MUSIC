@@ -69,6 +69,8 @@ let isGameOverPending;
 let isReset = 0;
 let gameTimer;
 let remainingTime;
+let birdFlyCounter = 0;
+let boxSoundCounter = 0;
 
 // WebSocket
 
@@ -410,12 +412,17 @@ function draw() {
     
     // Get Bird Location
     if(isBirdFlying == true){
+      birdFlyCounter -= 1;
       
-      newPos = mapPosition(bird.body.position)
-      // Bird x-speed: 4 * bird.body.velocity.x * bird.body.deltaTime)
-      let birdXSpeed_px = 4 * bird.body.velocity.x * bird.body.deltaTime;
-      let birdYSpeed_px = 4 * bird.body.velocity.y * bird.body.deltaTime;
-      oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, SPACE_WIDTH * birdXSpeed_px/width, SPACE_HEIGHT * birdYSpeed_px/width));
+      if(birdFlyCounter <= 0){
+        birdFlyCounter = 5;
+        console.log("Bird Flying!");
+        newPos = mapPosition(bird.body.position)
+        // Bird x-speed: 4 * bird.body.velocity.x * bird.body.deltaTime)
+        let birdXSpeed_px = 4 * bird.body.velocity.x * bird.body.deltaTime;
+        let birdYSpeed_px = 4 * bird.body.velocity.y * bird.body.deltaTime;
+        oscPort.send(createPacket("/bird", 0, newPos.x, newPos.y, SPACE_WIDTH * birdXSpeed_px/width, SPACE_HEIGHT * birdYSpeed_px/width));
+      }
       
       // Out Of Bound
       if(newPos.x < (-SPACE_WIDTH)/2 || newPos.x >(SPACE_WIDTH)/2 || newPos.y < 0){
@@ -573,7 +580,7 @@ function generatePairs(list) {
   let pairs = [];
   for (let i = 0; i < list.length - 1; i++) {
     for (let j = i + 1; j < list.length; j++) {
-      if((list[i].type=="pig" && list[j].type!="ground") || (list[j].type=="pig" && list[i].type!="ground")){
+      if((list[i].type=="pig" && list[j].type!="ground") || (list[j].type=="pig" && list[i].type!="ground") || (list[i].type=="box" && list[j].type=="box")){
         continue;
       }
       pairs.push([list[i], list[j]]);
@@ -599,7 +606,7 @@ function checkValidCollision(obj1, obj2){
 }
 
 function handleCollision(obj1, obj2){
-   if(DEBUG) console.log(obj1.type , obj2.type, "collided!", obj1.body.speed, obj2.body.speed);
+   //if(DEBUG) console.log(obj1.type , obj2.type, "collided!", obj1.body.speed, obj2.body.speed);
    
    if(obj1.type == "box" || obj2.type == "box"){    
      // box collide with anything -> box sound
@@ -607,7 +614,14 @@ function handleCollision(obj1, obj2){
      if(obj2.type == "box"){newPos = mapPosition(obj2.body.position);}
      
      // Send OSC packet
-     oscPort.send(createPacket("/wood", 0, newPos.x, newPos.y, 0, 0));
+     if(boxSoundCounter < 5){
+       //console.log("Box Sound!");
+       boxSoundCounter += 1;
+       oscPort.send(createPacket("/wood", 0, newPos.x, newPos.y, 0, 0));
+       setTimeout(() => {
+        boxSoundCounter -= 1;
+       }, 1000);
+     }
    }
    if(obj1.type == "bird" || obj2.type == "bird"){ 
      // bird collide -> bird sound stop
