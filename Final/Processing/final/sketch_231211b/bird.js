@@ -18,7 +18,7 @@ class RedBird {
     translate(pos.x, pos.y);
     rotate(angle);
     imageMode(CENTER);
-    image(RedBirdImg, 0, 0, this.r * 2.4, this.r * 2.4);
+    image(RedBirdImg, 0, 0, this.r * 2, this.r * 2);
     pop();
   }
 }

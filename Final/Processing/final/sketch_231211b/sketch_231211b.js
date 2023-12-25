@@ -29,7 +29,7 @@ let curStage = 1; // Default stage 1
 let gameOverBG;
 
 // Object
-let ground, slingshot, world, engine, mConstraint;
+let ground, slingshot, slingshot_copy, world, engine, mConstraint;
 let collideDetector;
 
 let bird;
@@ -55,7 +55,7 @@ let worldObjPairs = [];
 let RedBirdImg;
 let pigImg = [];
 let boxImg = [];
-let bkgImg;
+let bkgImg, bkgImg1, bkgImg2;
 
 // Mouse
 let isMouseOnBird = false;
@@ -91,6 +91,8 @@ function preload() {
   startMenuImg = loadImage('./images/startmenu.jpg');
   winImg = loadImage('./images/win.jpg');
   bkgImg = loadImage('./images/background-2.png');
+  bkgImg1 = loadImage('./images/background-21.png');
+  bkgImg2 = loadImage('./images/background-22.png');
   groundImg = loadImage('./images/ground.jpg');
   
   font = loadFont('./assets/angrybirds-regular.ttf');
@@ -184,7 +186,8 @@ function setup() {
   }
   
   // Slingshot
-  slingshot = new SlingShot(width * SLING_XPOS, height * SLING_YPOS, bird.body);
+  slingshot = new SlingShot(width * (SLING_XPOS - 0.02), height * (SLING_YPOS + 0.02), bird.body);
+  slingshot_copy = new SlingShot(width * (SLING_XPOS + 0.01), height * (SLING_YPOS + 0.02), bird.body);
 
   // Collision
   worldObj.push(ground);
@@ -228,9 +231,10 @@ function reset(){
   
   worldObj = [];
   // Add Bird
-  bird = new RedBird(300, 300, 30, RedBirdImg);
+  bird = new RedBird(220, 490, 30, RedBirdImg);
   worldObj[0] = bird;
   slingshot.attach(bird.body);
+  slingshot_copy.attach(bird.body);
   
   // Add Pig
   pigs = [];
@@ -278,12 +282,12 @@ function keyPressed() {
       if(!slingshot.isAttach() && bird_left > 0){
         // slingshot is now empty
         World.remove(world, bird.body);
-        bird = new RedBird(300, 300, 30, RedBirdImg);
-        
+        bird = new RedBird(220, 490, 30, RedBirdImg);
         // Regenerate pairs for collision detection since the bird is a new object
         worldObj[0] = bird;
         worldObjPairs = generatePairs(worldObj);
         slingshot.attach(bird.body);
+        slingshot_copy.attach(bird.body);
        
       }
     }
@@ -355,6 +359,7 @@ function mouseReleased() {
       let newPos = mapPosition(pos);
       bird_left -= 1;
       slingshot.fly();
+      slingshot_copy.fly();
       oscPort.send(createPacket("/slingshot", 1, newPos.x, newPos.y, 0, 0));
       isMouseOnBird = false;
       isBirdFlying = true;
@@ -400,6 +405,7 @@ function draw() {
     }
     bird.show();
     slingshot.show();
+    slingshot_copy.show();
     detectCollision();
     
     // Get Bird Location
